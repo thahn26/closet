@@ -16,7 +16,7 @@ function renderToday(view) {
   const laundry = db.items.filter(i => i.status === 'laundry');
   const unused = Stylist.unused();
   const nudges = [];
-  if (!userStyles().length) nudges.push({ a: 'styles', icon: 'style', t: '원하는 스타일을 골라 주세요', s: '추천이 내 취향에 맞춰져요' });
+  if (!userStyles().length) nudges.push({ a: 'swipe', icon: 'style', t: '스타일 테스트 하기', s: '코디 사진을 좋아·별로로 넘기면 취향을 찾아 드려요' });
   if (!bodyType()) nudges.push({ a: 'body', icon: 'ruler', t: '체형 분석하기', s: '나와 같은 체형의 마네킹이 생겨요' });
   if (!db.profile.pcolor) nudges.push({ a: 'pcolor', icon: 'palette', t: '퍼스널컬러 진단하기', s: '얼굴이 화사해 보이는 색으로 추천해요' });
 
@@ -80,6 +80,7 @@ function renderToday(view) {
     if (a === 'washed') { laundry.forEach(i => i.status = 'ok'); save(); toast('세탁 끝! 다시 추천에 넣었어요'); renderToday(view); }
     if (a === 'unused') { StyleState.seg = 'tidy'; go('style'); }
     if (a === 'styles') editStyles();
+    if (a === 'swipe') openStyleSwipe();
     if (a === 'body') openBody();
     if (a === 'pcolor') openPersonalColor();
   };
