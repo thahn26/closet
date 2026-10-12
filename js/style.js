@@ -14,7 +14,7 @@ function renderStyle(view) {
       </div>
       <div data-r="body">${seg === 'report' ? reportHtml() : seg === 'shop' ? shopHtml() : seg === 'wish' ? wishHtml() : tidyHtml()}</div>
     </div>`;
-  hydrateImgs(view); hydrateSvg(view);
+  hydrateImgs(view);
   view.onclick = async (e) => {
     const s = e.target.closest('[data-g="seg"] [data-v]');
     if (s) { StyleState.seg = s.dataset.v; return renderStyle(view); }

@@ -17,7 +17,7 @@ function renderToday(view) {
   const unused = Stylist.unused();
   const nudges = [];
   if (!userStyles().length) nudges.push({ a: 'styles', icon: 'style', t: '원하는 스타일을 골라 주세요', s: '추천이 내 취향에 맞춰져요' });
-  if (!bodyType()) nudges.push({ a: 'body', icon: 'ruler', t: '체형 분석하기', s: '나와 같은 체형의 마네킹이 생겨요' });
+  if (!bodyType()) nudges.push({ a: 'body', icon: 'ruler', t: '체형 분석하기', s: '체형에 맞는 핏과 코디를 추천해요' });
   if (!db.profile.pcolor) nudges.push({ a: 'pcolor', icon: 'palette', t: '퍼스널컬러 진단하기', s: '얼굴이 화사해 보이는 색으로 추천해요' });
 
   view.innerHTML = `
@@ -59,7 +59,7 @@ function renderToday(view) {
       ${unused.length ? `<button class="card mini-row" data-a="unused"><span class="row-ic">${ic('closet')}</span><span class="grow"><b>오래 안 입은 옷 ${unused.length}벌</b><small>살려 입는 코디를 만들어 드려요</small></span>${ic('chev')}</button>` : ''}
       ${nudges.map(n => `<button class="card mini-row" data-a="${n.a}"><span class="row-ic">${ic(n.icon)}</span><span class="grow"><b>${n.t}</b><small>${n.s}</small></span>${ic('chev')}</button>`).join('')}
     </div>`;
-  hydrateSvg(view); hydrateImgs(view);
+  hydrateImgs(view);
   bindOutfitCards(view, recs, { day });
   view.onclick = async (e) => {
     const c = e.target.closest('[data-g] [data-v]');
@@ -101,13 +101,13 @@ function wxTips(wx) {
 function outfitCard(r, i) {
   const items = r.ids.map(itemById).filter(Boolean);
   return `<div class="ocard" data-i="${i}">
-    <div class="ocard-mq">${mannequinSvg(r.ids, { cls: 'mini' })}</div>
+    <div class="ocard-mq">${outfitBoard(r.ids, { cls: 'mini' })}</div>
     <div class="ocard-info">
       <div class="ocard-top"><span class="score">${r.score}</span><div><b>${r.grade}</b><small>${STYLE[r.styleId]?.name || ''} 스타일</small></div></div>
       <ul class="why">${r.good.map(t => `<li class="g">${esc(t)}</li>`).join('')}${r.warn.map(t => `<li class="w">${esc(t)}</li>`).join('')}</ul>
       <div class="thumbs sm">${items.map(it => `<img data-img="${thumbKey(it.id)}" data-item="${it.id}" alt="${esc(itemName(it))}">`).join('')}</div>
     </div>
-    <div class="ocard-act"><button class="btn" data-act="fit">입혀 보기</button><button class="btn primary" data-act="wear">이걸로 입을래요</button></div>
+    <div class="ocard-act"><button class="btn" data-act="fit">바꿔 보기</button><button class="btn primary" data-act="wear">이걸로 입을래요</button></div>
   </div>`;
 }
 function bindOutfitCards(root, recs, { day = today() } = {}) {
@@ -117,7 +117,7 @@ function bindOutfitCards(root, recs, { day = today() } = {}) {
     card.addEventListener('click', (e) => {
       e.stopPropagation();
       const th = e.target.closest('[data-item]');
-      if (th && th.tagName === 'IMG') return openItem(th.dataset.item);
+      if (th && th.tagName === 'IMG' && !th.closest('.board')) return openItem(th.dataset.item);
       const act = e.target.closest('[data-act]')?.dataset.act;
       if (act === 'fit' || e.target.closest('.ocard-mq')) { closeAllSheets(); openFitting(r.ids); }
       if (act === 'wear') { addWear(day, r.ids); closeAllSheets(); }

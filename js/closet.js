@@ -284,7 +284,7 @@ function openItem(id) {
       </div>
       <div class="list actions">
         <button class="row" data-a="reco"><span class="row-ic">${ic('style')}</span><span class="grow"><b>이 옷으로 코디 추천</b></span>${ic('chev')}</button>
-        <button class="row" data-a="fit"><span class="row-ic">${ic('fitting')}</span><span class="grow"><b>피팅룸에서 입어 보기</b></span>${ic('chev')}</button>
+        <button class="row" data-a="fit"><span class="row-ic">${ic('layers')}</span><span class="grow"><b>이 옷으로 코디 만들기</b></span>${ic('chev')}</button>
         <button class="row" data-a="wear"><span class="row-ic">${ic('calendar')}</span><span class="grow"><b>오늘 입었어요</b></span></button>
         <button class="row" data-a="edit"><span class="row-ic">${ic('edit')}</span><span class="grow"><b>정보 고치기</b></span></button>
         <button class="row" data-a="retouch"><span class="row-ic">${ic('eraser')}</span><span class="grow"><b>누끼 다시 다듬기</b></span></button>
@@ -376,6 +376,6 @@ function showForcedOutfits(id) {
   const recs = Stylist.recommend({ force: id, count: 3 });
   const p = openSheet(`${sheetHeader(`${itemName(it)} 코디`)}
     ${recs.length ? `<div class="ocards">${recs.map((r, i) => outfitCard(r, i)).join('')}</div>` : `<div class="empty"><b>같이 입을 옷이 부족해요</b><p class="muted">${it.cat === 'top' ? '하의' : it.cat === 'bottom' ? '상의' : '상의·하의'}를 더 등록해 주세요.</p></div>`}`, { full: true });
-  hydrateSvg(p); hydrateImgs(p);
+  hydrateImgs(p);
   bindOutfitCards(p, recs);
 }

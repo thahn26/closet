@@ -226,8 +226,8 @@ details.more[open] > summary::before { content: '－ '; }
 .ocards:not(.hscroll) { display: flex; flex-direction: column; gap: 12px; }
 .ocard { flex: none; width: min(86vw, 420px); scroll-snap-align: center; background: var(--card); border-radius: var(--r); box-shadow: var(--shadow); padding: 12px; display: grid; grid-template-columns: 42% 1fr; gap: 10px; }
 .ocards:not(.hscroll) .ocard { width: 100%; }
-.ocard-mq { background: var(--tile); border-radius: 14px; display: grid; place-items: center; padding: 6px 0; cursor: pointer; }
-.ocard-mq svg { width: 100%; height: auto; max-height: 300px; }
+.ocard-mq { cursor: pointer; align-self: start; }
+.ocard-mq .board { border-radius: 12px; }
 .ocard-info { min-width: 0; display: flex; flex-direction: column; gap: 8px; }
 .ocard-top { display: flex; gap: 10px; align-items: center; }
 .ocard-top b { display: block; font-size: 15.5px; }
@@ -300,16 +300,15 @@ details.more[open] > summary::before { content: '－ '; }
 .slider input { flex: 1; accent-color: var(--accent); }
 .ed-more summary { color: var(--accent); font-weight: 600; font-size: 14.5px; padding: 8px 2px; cursor: pointer; }
 
-/* ── 마네킹 ── */
-.mq .mq-body path, .mq .mq-body ellipse, .mq .mq-body rect { fill: var(--mq); stroke: var(--mq-line); stroke-width: 1.4; }
-.mq .mq-shadow { fill: rgba(0, 0, 0, .08); }
-.mq image { filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .18)); }
-.mq.big image.mq-item { cursor: grab; touch-action: none; }
-.mq.big image.mq-item.sel { filter: drop-shadow(0 0 1.5px var(--accent)) drop-shadow(0 0 4px var(--accent)); }
+/* ── 코디 보드 ── */
+.board { position: relative; width: 100%; aspect-ratio: 3 / 4; background: var(--tile); border-radius: 14px; overflow: hidden; }
+.board img { position: absolute; object-fit: contain; filter: drop-shadow(0 3px 6px rgba(0, 0, 0, .18)); }
+.board.big { border-radius: 22px; background: radial-gradient(ellipse at 50% 40%, var(--card) 0%, var(--tile) 80%); }
+.board.big img { cursor: pointer; }
+.board-empty { position: absolute; inset: 0; display: grid; place-items: center; color: var(--sub); font-size: 14px; font-weight: 600; text-align: center; padding: 20px; }
 
 /* ── 피팅룸 ── */
-.stage { position: relative; height: 54vh; min-height: 360px; border-radius: 22px; overflow: hidden; display: grid; place-items: center; touch-action: none; }
-.stage svg.mq { height: 100%; width: auto; max-width: 100%; touch-action: none; }
+.stage { position: relative; width: min(100%, 40vh, 440px); width: min(100%, 40dvh, 440px); margin: 0 auto; }
 .stage-hint { position: absolute; bottom: 16px; left: 0; right: 0; text-align: center; color: var(--sub); font-size: 14px; font-weight: 600; }
 .fit-score { position: absolute; top: 10px; left: 10px; display: flex; gap: 8px; align-items: center; background: var(--card); border-radius: 999px; padding: 4px 14px 4px 4px; box-shadow: var(--shadow); text-align: left; }
 .fit-score .score { width: 38px; height: 38px; font-size: 15px; }
@@ -325,7 +324,7 @@ details.more[open] > summary::before { content: '－ '; }
 .fit-actions::-webkit-scrollbar { display: none; }
 .picker { margin-top: 4px; }
 .pick .tile { width: 92px; flex: none; scroll-snap-align: start; }
-.looks .look { position: relative; flex: none; width: 120px; background: var(--tile); border-radius: 14px; padding: 4px; cursor: pointer; }
+.looks .look { position: relative; flex: none; width: 120px; cursor: pointer; }
 .look-del { position: absolute; top: 4px; right: 4px; width: 24px; height: 24px; border-radius: 50%; background: var(--card); font-size: 16px; line-height: 1; color: var(--sub); }
 .fit-detail .big-score { display: flex; gap: 14px; align-items: center; margin: 4px 0 6px; }
 .fit-detail .big-score b { display: block; font-size: 19px; }
@@ -380,9 +379,7 @@ details.more[open] > summary::before { content: '－ '; }
 .wish-sw span { background: var(--card); padding: 4px 12px; border-radius: 999px; font-weight: 700; font-size: 14px; }
 
 /* ── 나 ── */
-.profile { display: grid; grid-template-columns: 34% 1fr; gap: 12px; align-items: center; }
-.profile-mq { background: var(--tile); border-radius: 14px; padding: 6px 0; }
-.profile-mq svg { width: 100%; height: auto; }
+.profile { display: block; }
 .profile-info { display: flex; flex-direction: column; gap: 4px; }
 .pi-row { text-align: left; padding: 8px 4px; border-bottom: .5px solid var(--line); }
 .pi-row:last-child { border-bottom: 0; }
@@ -402,8 +399,8 @@ details.more[open] > summary::before { content: '－ '; }
 .cal-d.has { background: var(--accent-soft); }
 .cal-d.today { box-shadow: inset 0 0 0 2px var(--ink); color: var(--ink); }
 .day-view { display: grid; grid-template-columns: 38% 1fr; gap: 10px; margin-bottom: 10px; }
-.day-mq { background: var(--tile); border-radius: 14px; }
-.day-mq svg { width: 100%; height: auto; }
+.day-mq { align-self: start; }
+
 .style-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .style-card { text-align: left; padding: 12px; border-radius: 14px; background: var(--card2); box-shadow: inset 0 0 0 1px var(--line); display: flex; flex-direction: column; gap: 3px; }
 .style-card b { font-size: 15px; }
@@ -411,9 +408,6 @@ details.more[open] > summary::before { content: '－ '; }
 .style-card.on { background: var(--accent-soft); box-shadow: inset 0 0 0 2px var(--accent); }
 .sc-sw { display: flex; gap: 3px; margin-bottom: 4px; }
 .sc-sw i { width: 16px; height: 16px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12); }
-.body-top { display: grid; grid-template-columns: 38% 1fr; gap: 12px; align-items: center; margin-bottom: 8px; }
-.body-mq { background: var(--tile); border-radius: 16px; padding: 6px 0; }
-.body-mq svg { width: 100%; height: auto; }
 .body-res small { color: var(--sub); font-weight: 600; }
 .body-res h3 { font-size: 22px; margin: 2px 0 4px; }
 .body-res p { font-size: 13.5px; margin: 0 0 8px; }

@@ -8,7 +8,6 @@ function renderMe(view) {
     <div class="page">
       <div class="page-h"><h1>나</h1></div>
       <div class="card profile">
-        <div class="profile-mq">${mannequinSvg([], { cls: 'mini' })}</div>
         <div class="profile-info">
           <button class="pi-row" data-a="body"><small>체형</small><b>${bt ? `${BODY_TYPES[bt].name}` : '분석 전'}</b><span>${bt ? esc(BODY_TYPES[bt].short) : '치수나 전신 사진으로'}${b.height ? ` · ${b.height}cm` : ''}</span></button>
           <button class="pi-row" data-a="pcolor"><small>퍼스널컬러</small><b>${pc ? PCOLORS[pc].name : '진단 전'}</b>${pc ? `<span class="pal-mini">${PCOLORS[pc].good.slice(0, 6).map(h => swatch(h, 12)).join('')}</span>` : '<span>질문 + 셀카로</span>'}</button>
@@ -22,7 +21,7 @@ function renderMe(view) {
       </div>
 
       <div class="list card">
-        <button class="row" data-a="body"><span class="row-ic">${ic('ruler')}</span><span class="grow"><b>체형 분석</b><small>내 치수로 마네킹 만들기</small></span>${ic('chev')}</button>
+        <button class="row" data-a="body"><span class="row-ic">${ic('ruler')}</span><span class="grow"><b>체형 분석</b><small>치수나 전신 사진으로</small></span>${ic('chev')}</button>
         <button class="row" data-a="pcolor"><span class="row-ic">${ic('palette')}</span><span class="grow"><b>퍼스널컬러 진단</b><small>${pc ? '다시 진단하기' : '어울리는 색 찾기'}</small></span>${ic('chev')}</button>
         <button class="row" data-a="styles"><span class="row-ic">${ic('style')}</span><span class="grow"><b>원하는 스타일·추천 범위</b></span>${ic('chev')}</button>
         <button class="row" data-a="archive"><span class="row-ic">${ic('bag')}</span><span class="grow"><b>보관함</b><small>정리한 옷 ${db.archive.length}벌</small></span>${ic('chev')}</button>
@@ -31,7 +30,7 @@ function renderMe(view) {
         <button class="row" data-a="about"><span class="row-ic">${ic('gear')}</span><span class="grow"><b>앱 정보</b></span>${ic('chev')}</button>
       </div>
     </div>`;
-  hydrateSvg(view); hydrateImgs(view);
+  hydrateImgs(view);
   view.onclick = (e) => {
     const nav = e.target.closest('[data-ym]');
     if (nav) { MeState.ym = nav.dataset.ym; return renderMe(view); }
@@ -98,12 +97,12 @@ function openDay(day, after) {
   const ids = w.items.filter(id => itemById(id));
   const ev = ids.length ? Stylist.evaluate(ids, { day, wx: null }) : null;
   const p = openSheet(`${sheetHeader(dayLabel(day))}
-    ${ids.length ? `<div class="day-view"><div class="day-mq">${mannequinSvg(ids, { cls: 'mini' })}</div>
+    ${ids.length ? `<div class="day-view"><div class="day-mq">${outfitBoard(ids, { cls: 'mini' })}</div>
       <div><div class="grid sm">${ids.map(id => itemTile(itemById(id), { badge: false })).join('')}</div>${ev ? `<p class="muted sm">${ev.grade} · ${STYLE[ev.styleId]?.name || ''}</p>` : ''}</div></div>` : '<p class="muted">이날 입은 옷 기록이 없어요.</p>'}
     <input class="inp" data-r="note" placeholder="메모 (어디 갔는지, 칭찬 들은 코디 등)" value="${esc(w.note || '')}">
     <div class="btn-row">${ids.length ? '<button class="btn danger-t" data-a="del">기록 지우기</button>' : ''}<button class="btn primary" data-a="pick">${ids.length ? '옷 바꾸기' : '입은 옷 고르기'}</button></div>`,
   { onClose: () => { const n = $('[data-r="note"]', p)?.value.trim() || ''; if (db.wears[day] && n !== (db.wears[day].note || '')) { db.wears[day].note = n; save(); } after && after(); rerender(); } });
-  hydrateSvg(p);
+  hydrateImgs(p);
   p.addEventListener('click', async (e) => {
     const a = e.target.closest('[data-a]')?.dataset.a;
     const t = e.target.closest('[data-item]');
@@ -153,7 +152,7 @@ function editStyles({ onboarding = false } = {}) {
         <button data-v="m" class="${pref === 'm' ? 'on' : ''}">남성복 위주</button>
         <button data-v="u" class="${pref === 'u' ? 'on' : ''}">구분 없이</button>
       </div>
-      <p class="hint">기본템 추천(스커트·원피스 등 포함 여부)과 마네킹 기본 치수에만 쓰여요.</p>
+      <p class="hint">기본템 추천에서 스커트·원피스 등을 넣을지 정할 때 쓰여요.</p>
       ${sheetFooter(onboarding ? '다음' : '저장')}`, { full: true, onClose: () => resolve() });
     p.addEventListener('click', (e) => {
       const s = e.target.closest('[data-s]');
@@ -175,7 +174,7 @@ function editStyles({ onboarding = false } = {}) {
 // ── 체형 분석 ──
 const BODY_FIELDS = [
   { k: 'height', name: '키', unit: 'cm', help: '맨발로 똑바로 서서' },
-  { k: 'weight', name: '몸무게', unit: 'kg', help: '선택 — 마네킹 팔·다리 굵기에만 써요', opt: true },
+  { k: 'weight', name: '몸무게', unit: 'kg', help: '선택 — 저장만 하고 분석에는 안 써요', opt: true },
   { k: 'shoulder', name: '어깨너비', unit: 'cm', help: '등 뒤에서 한쪽 어깨 끝 → 반대쪽 어깨 끝' },
   { k: 'bust', name: '가슴둘레', unit: 'cm', help: '가슴의 가장 두꺼운 곳을 수평으로 한 바퀴' },
   { k: 'waist', name: '허리둘레', unit: 'cm', help: '배꼽 위 가장 잘록한 곳' },
@@ -184,22 +183,18 @@ const BODY_FIELDS = [
 function openBody() {
   const b = { ...db.profile.body };
   const p = openSheet(`${sheetHeader('체형 분석', '<button class="link b" data-a="save">저장</button>')}
-    <div class="body-top">
-      <div class="body-mq" data-r="mq"></div>
-      <div class="body-res" data-r="res"></div>
-    </div>
+    <div class="body-res card" data-r="res"></div>
     <button class="btn wide" data-a="photo">${ic('camera')} 전신 사진으로 재기</button>
     <p class="hint">줄자가 없으면 전신 사진으로 대략 잴 수 있어요. 키만 정확히 넣어 주세요. 사진은 저장하지 않아요.</p>
     <div class="body-form">${BODY_FIELDS.map(f => `<label class="bf"><span><b>${f.name}</b><small>${f.help}</small></span>
       <span class="bf-in"><input class="inp" inputmode="decimal" data-k="${f.k}" value="${esc(b[f.k] || '')}" placeholder="${f.opt ? '선택' : ''}"><em>${f.unit}</em></span></label>`).join('')}</div>
     ${sheetFooter('저장', 'save')}`, { full: true });
   const draw = () => {
-    $('[data-r="mq"]', p).innerHTML = mannequinSvg([], { cls: 'mini', body: b });
     const t = bodyType(b);
     $('[data-r="res"]', p).innerHTML = t ? `<small>내 체형</small><h3>${BODY_TYPES[t].name}</h3><p>${esc(BODY_TYPES[t].desc)}</p>
       <ul class="dolist sm">${BODY_TYPES[t].do.slice(0, 3).map(x => `<li class="g">${esc(x)}</li>`).join('')}</ul>
       ${b.legRatio ? `<p class="muted sm">다리 길이 비율 ${Math.round(b.legRatio * 100)}% ${b.legRatio >= 0.48 ? '(긴 편)' : b.legRatio <= 0.45 ? '(하이웨이스트로 보완하면 좋아요)' : ''}</p>` : ''}`
-      : '<small>내 체형</small><h3>치수를 넣어 주세요</h3><p class="muted">가슴·허리·엉덩이 둘레를 넣으면 체형을 알려 드려요. 마네킹은 넣는 대로 바로 바뀌어요.</p>';
+      : '<small>내 체형</small><h3>치수를 넣어 주세요</h3><p class="muted">가슴·허리·엉덩이 둘레를 넣으면 체형을 알려 드려요.</p>';
   };
   draw();
   p.addEventListener('input', (e) => { const k = e.target.dataset.k; if (k) { b[k] = e.target.value.replace(/[^0-9.]/g, ''); draw(); } });

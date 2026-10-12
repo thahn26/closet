@@ -2,7 +2,7 @@
 const TABS = [
   { id: 'today', name: '오늘', icon: 'today', render: renderToday },
   { id: 'closet', name: '옷장', icon: 'closet', render: renderCloset },
-  { id: 'fitting', name: '피팅룸', icon: 'fitting', render: renderFitting },
+  { id: 'fitting', name: '코디', icon: 'layers', render: renderFitting },
   { id: 'style', name: '스타일', icon: 'style', render: renderStyle },
   { id: 'me', name: '나', icon: 'me', render: renderMe },
 ];
@@ -38,7 +38,7 @@ function onboarding() {
       <h2>나만의 옷장 스타일리스트</h2>
       <ul class="onb-list">
         <li>${ic('camera')}<span><b>옷 사진만 찍으면</b> 배경을 지워 옷장에 정리</span></li>
-        <li>${ic('fitting')}<span><b>내 체형 마네킹</b>에 이리저리 입혀 보기</span></li>
+        <li>${ic('layers')}<span><b>코디 보드</b>로 이리저리 맞춰 보고 저장</span></li>
         <li>${ic('today')}<span><b>매일 아침</b> 날씨·체형·퍼스널컬러 맞춤 코디</span></li>
         <li>${ic('style')}<span><b>옷장 분석</b>으로 꼭 필요한 옷만 사기</span></li>
       </ul>
@@ -50,7 +50,7 @@ function onboarding() {
     await editStyles({ onboarding: true });
     db.onboarded = true; save();
     const next = await choose('다음으로 할 일', [
-      { label: '체형 분석하기', sub: '치수나 전신 사진으로 나만의 마네킹 만들기', icon: 'ruler', value: 'body' },
+      { label: '체형 분석하기', sub: '치수나 전신 사진으로 내 체형에 맞는 추천 받기', icon: 'ruler', value: 'body' },
       { label: '옷 넣기', sub: '옷 사진을 찍어 옷장 채우기', icon: 'camera', value: 'add' },
       { label: '나중에 할게요', value: null },
     ]);

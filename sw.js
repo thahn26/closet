@@ -1,11 +1,11 @@
 // 오프라인 지원: 앱 파일은 네트워크 우선, 실패하면 캐시.
 // 누끼·사진 분석 도구(CDN 파일, 수십 MB)는 한 번 받으면 캐시에서 꺼내 쓴다. 날씨는 건드리지 않음.
-const CACHE = 'closet-v2';
+const CACHE = 'closet-v4';
 const TOOLS = 'closet-tools-v1';
 const ASSETS = [
   './', './index.html', './style.css', './manifest.webmanifest',
   './data/catalog.js',
-  './js/store.js', './js/ui.js', './js/color.js', './js/weather.js', './js/stylist.js', './js/mannequin.js',
+  './js/store.js', './js/ui.js', './js/color.js', './js/weather.js', './js/stylist.js', './js/board.js',
   './js/cutout.js', './js/vision.js', './js/closet.js', './js/today.js', './js/fitting.js', './js/style.js', './js/me.js', './js/app.js',
   './icons/icon-180.png', './icons/icon-192.png', './icons/icon-512.png',
 ];
