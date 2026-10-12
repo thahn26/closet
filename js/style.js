@@ -135,7 +135,7 @@ function wishHtml() {
 
 function addWishQuick() {
   const d = { cat: 'top', sub: 'tee', colors: [{ id: 'white', hex: COLOR.white.hex }], fit: 'regular', pattern: 'solid', name: '', price: '', link: '' };
-  const p = openSheet(`${sheetHeader('사고 싶은 옷', '<button class="link b" data-a="ok">담기</button>')}<div data-r="f"></div>`);
+  const p = openSheet(`${sheetHeader('사고 싶은 옷', '<button class="link b" data-a="ok">담기</button>')}<div data-r="f"></div>${sheetFooter('위시리스트에 담기')}`);
   const f = $('[data-r="f"]', p);
   const draw = () => {
     f.innerHTML = `

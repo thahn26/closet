@@ -140,7 +140,7 @@ function pickLaundry(ids) {
   const sel = new Set(items.filter(i => ['top', 'dress'].includes(i.cat)).map(i => i.id));
   const p = openSheet(`${sheetHeader('세탁 바구니에 넣기', '<button class="link b" data-a="ok">완료</button>')}
     <p class="hint">세탁 중인 옷은 다 빨 때까지 추천에서 빠져요.</p>
-    <div class="grid">${items.map(it => itemTile(it, { sel: sel.has(it.id), badge: false })).join('')}</div>`);
+    <div class="grid">${items.map(it => itemTile(it, { sel: sel.has(it.id), badge: false })).join('')}</div>${sheetFooter('세탁 중으로 표시')}`);
   p.addEventListener('click', (e) => {
     const t = e.target.closest('[data-item]');
     if (t) { const id = t.dataset.item; sel.has(id) ? sel.delete(id) : sel.add(id); t.classList.toggle('sel'); t.querySelector('.tile-check')?.remove(); if (sel.has(id)) t.insertAdjacentHTML('beforeend', `<span class="tile-check">${ic('check')}</span>`); }

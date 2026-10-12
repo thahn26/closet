@@ -234,7 +234,7 @@ function pickColors(current) {
     let out = null;
     const p = openSheet(`${sheetHeader('색 고르기', '<button class="link b" data-a="ok">완료</button>')}
       <p class="hint">처음 고른 색이 대표색이에요. 최대 3개.</p>
-      <div class="palette">${COLORS.map(c => `<button class="pal" data-c="${c.id}"><i style="background:${c.hex}"></i><span>${c.name}</span><b class="ord"></b></button>`).join('')}</div>`,
+      <div class="palette">${COLORS.map(c => `<button class="pal" data-c="${c.id}"><i style="background:${c.hex}"></i><span>${c.name}</span><b class="ord"></b></button>`).join('')}</div>${sheetFooter('이 색으로')}`,
     { onClose: () => resolve(out) });
     const paint = () => $$('.pal', p).forEach(b => { const i = sel.indexOf(b.dataset.c); b.classList.toggle('on', i >= 0); $('.ord', b).textContent = i >= 0 ? i + 1 : ''; });
     paint();

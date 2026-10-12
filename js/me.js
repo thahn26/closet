@@ -121,7 +121,7 @@ function pickItems(initial = [], title = '옷 고르기') {
     let cat = 'all', out = null;
     const p = openSheet(`${sheetHeader(title, '<button class="link b" data-a="ok">완료</button>')}
       <div class="chips scroll" data-g="cat"><button class="chip on" data-v="all">전체</button>${CATS.map(c => `<button class="chip" data-v="${c.id}">${c.name}</button>`).join('')}</div>
-      <div class="grid" data-r="g"></div>`, { full: true, onClose: () => resolve(out) });
+      <div class="grid" data-r="g"></div>${sheetFooter('고르기 완료')}`, { full: true, onClose: () => resolve(out) });
     const draw = () => {
       $('[data-r="g"]', p).innerHTML = db.items.filter(i => cat === 'all' || i.cat === cat).map(it => itemTile(it, { sel: sel.has(it.id), badge: false })).join('') || '<p class="muted">옷이 없어요</p>';
       hydrateImgs(p);
@@ -153,7 +153,8 @@ function editStyles({ onboarding = false } = {}) {
         <button data-v="m" class="${pref === 'm' ? 'on' : ''}">남성복 위주</button>
         <button data-v="u" class="${pref === 'u' ? 'on' : ''}">구분 없이</button>
       </div>
-      <p class="hint">기본템 추천(스커트·원피스 등 포함 여부)과 마네킹 기본 치수에만 쓰여요.</p>`, { full: true, onClose: () => resolve() });
+      <p class="hint">기본템 추천(스커트·원피스 등 포함 여부)과 마네킹 기본 치수에만 쓰여요.</p>
+      ${sheetFooter(onboarding ? '다음' : '저장')}`, { full: true, onClose: () => resolve() });
     p.addEventListener('click', (e) => {
       const s = e.target.closest('[data-s]');
       if (s) {
@@ -190,7 +191,8 @@ function openBody() {
     <button class="btn wide" data-a="photo">${ic('camera')} 전신 사진으로 재기</button>
     <p class="hint">줄자가 없으면 전신 사진으로 대략 잴 수 있어요. 키만 정확히 넣어 주세요. 사진은 저장하지 않아요.</p>
     <div class="body-form">${BODY_FIELDS.map(f => `<label class="bf"><span><b>${f.name}</b><small>${f.help}</small></span>
-      <span class="bf-in"><input class="inp" inputmode="decimal" data-k="${f.k}" value="${esc(b[f.k] || '')}" placeholder="${f.opt ? '선택' : ''}"><em>${f.unit}</em></span></label>`).join('')}</div>`, { full: true });
+      <span class="bf-in"><input class="inp" inputmode="decimal" data-k="${f.k}" value="${esc(b[f.k] || '')}" placeholder="${f.opt ? '선택' : ''}"><em>${f.unit}</em></span></label>`).join('')}</div>
+    ${sheetFooter('저장', 'save')}`, { full: true });
   const draw = () => {
     $('[data-r="mq"]', p).innerHTML = mannequinSvg([], { cls: 'mini', body: b });
     const t = bodyType(b);

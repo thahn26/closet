@@ -79,6 +79,11 @@ function sheetHeader(title, right = '', left = '<button class="link" data-x="clo
   return `<div class="sheet-h">${left}<h3>${esc(title)}</h3>${right || '<span style="min-width:48px"></span>'}</div>`;
 }
 
+// 시트 맨 아래 큰 버튼 (스크롤해도 바닥에 붙어 있음)
+function sheetFooter(label, a = 'ok') {
+  return `<div class="btn-row sticky foot"><button class="btn primary" data-a="${a}">${esc(label)}</button></div>`;
+}
+
 // 확인창 (Promise<boolean>)
 function ask(title, msg, yes = '확인', no = '취소', danger = false) {
   return new Promise(resolve => {
