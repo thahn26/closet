@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6efe6"/><stop offset="1" stop-color="#e6d3bd"/></linearGradient></defs>
+  <rect width="512" height="512" fill="url(#g)"/>
+  <g fill="none" stroke="#1d1b19" stroke-width="22" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M256 168a34 34 0 1 1 34-34c0 19-34 26-34 48v8"/>
+    <path d="M256 190 98 306a24 24 0 0 0 14 43h288a24 24 0 0 0 14-43z"/>
+  </g>
+  <text x="256" y="440" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-weight="600" font-size="72" fill="#1d1b19">closet</text>
+</svg>
