@@ -458,36 +458,3 @@ details.more[open] > summary::before { content: '－ '; }
 .onb-list b { font-weight: 750; }
 .need-note { display: inline-block; font-style: normal; font-size: 11.5px; font-weight: 700; color: var(--accent); background: var(--accent-soft); padding: 1px 7px; border-radius: 999px; margin: 2px 0; }
 .btn-row.foot .btn { padding: 15px; font-size: 16.5px; }
-
-/* ── 스타일 테스트 (스와이프) ── */
-.sw-intro { text-align: center; padding: 14px 4px; }
-.sw-intro h2 { font-size: 22px; margin-bottom: 8px; }
-.sw-intro .list { text-align: left; }
-.sw-demo { display: flex; justify-content: space-between; margin: 18px 10px 6px; font-weight: 800; }
-.sw-demo .no { color: var(--warn); } .sw-demo .yes { color: var(--good); }
-.sw-top { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; color: var(--sub); margin: 2px 0 10px; }
-.sw-top .bar { flex: 1; height: 5px; background: var(--fill); border-radius: 3px; overflow: hidden; }
-.sw-top .bar i { display: block; height: 100%; background: var(--accent); }
-.sw-stack { position: relative; height: min(60vh, 560px); height: min(60dvh, 560px); }
-.sw-card { position: absolute; inset: 0; margin: 0 auto; max-width: 400px; border-radius: 22px; overflow: hidden; background: var(--tile); box-shadow: 0 8px 26px rgba(0, 0, 0, .18); touch-action: none; user-select: none; -webkit-user-select: none; cursor: grab; }
-.sw-card img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; -webkit-user-drag: none; }
-.sw-card.back { transform: scale(.95) translateY(10px); opacity: .7; box-shadow: none; }
-.stamp { position: absolute; top: 22px; font-size: 30px; font-weight: 900; padding: 4px 14px; border: 4px solid; border-radius: 12px; opacity: 0; background: rgba(255, 255, 255, .85); letter-spacing: 0; }
-.stamp.yes { left: 18px; color: var(--good); transform: rotate(-12deg); }
-.stamp.no { right: 18px; color: var(--warn); transform: rotate(12deg); }
-.sw-by { position: absolute; left: 10px; bottom: 8px; font-size: 10.5px; color: #fff; text-shadow: 0 1px 3px rgba(0, 0, 0, .7); }
-.sw-btns { display: flex; justify-content: center; align-items: center; gap: 22px; margin: 16px 0 4px; }
-.sw-b { width: 62px; height: 62px; border-radius: 50%; background: var(--card); box-shadow: var(--shadow), inset 0 0 0 1px var(--line); display: grid; place-items: center; font-size: 26px; font-weight: 800; }
-.sw-b svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 2.2; }
-.sw-b.no { color: var(--warn); }
-.sw-b.yes { color: var(--good); }
-.sw-b.yes svg { fill: currentColor; }
-.sw-b.undo { width: 44px; height: 44px; color: var(--sub); }
-.sw-b.undo svg { width: 20px; height: 20px; }
-.sw-res { text-align: center; padding: 10px 0 4px; }
-.sw-res small { color: var(--sub); font-weight: 600; }
-.sw-res h2 { font-family: var(--serif); font-size: 30px; font-weight: 600; margin: 4px 0 6px; }
-.me-tags.dark { justify-content: center; }
-.me-tags.dark .tag { background: var(--accent-soft); color: var(--accent); }
-.sw-liked { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
-.sw-liked img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; border-radius: 8px; }

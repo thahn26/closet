@@ -12,7 +12,7 @@ function renderMe(view) {
         <div class="profile-info">
           <button class="pi-row" data-a="body"><small>체형</small><b>${bt ? `${BODY_TYPES[bt].name}` : '분석 전'}</b><span>${bt ? esc(BODY_TYPES[bt].short) : '치수나 전신 사진으로'}${b.height ? ` · ${b.height}cm` : ''}</span></button>
           <button class="pi-row" data-a="pcolor"><small>퍼스널컬러</small><b>${pc ? PCOLORS[pc].name : '진단 전'}</b>${pc ? `<span class="pal-mini">${PCOLORS[pc].good.slice(0, 6).map(h => swatch(h, 12)).join('')}</span>` : '<span>질문 + 셀카로</span>'}</button>
-          <button class="pi-row" data-a="${prefs.length ? 'styles' : 'swipe'}"><small>원하는 스타일</small><b>${prefs.length ? prefs.map(s => STYLE[s].name).join(', ') : '테스트 전'}</b>${db.profile.taste && (db.profile.taste.tone || db.profile.taste.fit) ? `<span>${[TONE_NAME[db.profile.taste.tone], FIT_NAME[db.profile.taste.fit]].filter(Boolean).join(' · ')}</span>` : ''}</button>
+          <button class="pi-row" data-a="styles"><small>원하는 스타일</small><b>${prefs.length ? prefs.map(s => STYLE[s].name).join(', ') : '고르기 전'}</b></button>
         </div>
       </div>
 
@@ -24,8 +24,7 @@ function renderMe(view) {
       <div class="list card">
         <button class="row" data-a="body"><span class="row-ic">${ic('ruler')}</span><span class="grow"><b>체형 분석</b><small>내 치수로 마네킹 만들기</small></span>${ic('chev')}</button>
         <button class="row" data-a="pcolor"><span class="row-ic">${ic('palette')}</span><span class="grow"><b>퍼스널컬러 진단</b><small>${pc ? '다시 진단하기' : '어울리는 색 찾기'}</small></span>${ic('chev')}</button>
-        <button class="row" data-a="swipe"><span class="row-ic">${ic('heart')}</span><span class="grow"><b>스타일 테스트</b><small>코디 사진을 넘기며 내 취향 찾기${db.profile.taste ? ' · 다시 하기' : ''}</small></span>${ic('chev')}</button>
-        <button class="row" data-a="styles"><span class="row-ic">${ic('style')}</span><span class="grow"><b>원하는 스타일·추천 범위</b><small>직접 고르기</small></span>${ic('chev')}</button>
+        <button class="row" data-a="styles"><span class="row-ic">${ic('style')}</span><span class="grow"><b>원하는 스타일·추천 범위</b></span>${ic('chev')}</button>
         <button class="row" data-a="archive"><span class="row-ic">${ic('bag')}</span><span class="grow"><b>보관함</b><small>정리한 옷 ${db.archive.length}벌</small></span>${ic('chev')}</button>
         <button class="row" data-a="loc"><span class="row-ic">${ic('pin')}</span><span class="grow"><b>날씨 위치</b><small>${esc(Weather.loc().name)}</small></span>${ic('chev')}</button>
         <button class="row" data-a="backup"><span class="row-ic">${ic('layers')}</span><span class="grow"><b>백업·복원</b><small>사진까지 파일 하나로 저장해요</small></span>${ic('chev')}</button>
@@ -42,7 +41,6 @@ function renderMe(view) {
     if (a === 'body') openBody();
     if (a === 'pcolor') openPersonalColor();
     if (a === 'styles') editStyles();
-    if (a === 'swipe') openStyleSwipe();
     if (a === 'cal') openCalendar();
     if (a === 'archive') openArchive();
     if (a === 'loc') changeLocation();
@@ -481,7 +479,6 @@ function openAbout() {
         <li>날씨는 Open-Meteo 무료 날씨 정보예요.</li>
         <li>코디 추천은 색 조합·날씨·체형·퍼스널컬러·착용 기록 규칙으로 계산해요. 돈 드는 AI는 쓰지 않아요.</li>
       </ul>
-      <details class="more"><summary>스타일 테스트 사진 출처</summary><p class="muted sm">Unsplash 무료 라이선스 사진 · 사진가 ${[...new Set(SWIPE_CARDS.map(c => '@' + c.by))].map(esc).join(', ')}</p></details>
       <p class="muted sm">옷 ${db.items.length}벌 · 기록 ${Object.keys(db.wears).length}일 · 저장한 코디 ${db.looks.length}개</p>
     </div>`);
 }

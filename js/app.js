@@ -47,7 +47,7 @@ function onboarding() {
     </div>`, { full: true });
   p.querySelector('[data-a="start"]').onclick = async () => {
     closeSheet();
-    await openStyleSwipe({ onboarding: true });
+    await editStyles({ onboarding: true });
     db.onboarded = true; save();
     const next = await choose('다음으로 할 일', [
       { label: '체형 분석하기', sub: '치수나 전신 사진으로 나만의 마네킹 만들기', icon: 'ruler', value: 'body' },

@@ -171,26 +171,6 @@ function scoreOutfit(o, C) {
     add(Math.round(top[1] / sItems.length * 8));
   }
 
-  // 3-1) 스타일 테스트로 찾은 취향 (색감·핏)
-  const taste = db.profile.taste;
-  if (taste && (taste.tone || taste.fit)) {
-    if (taste.tone) {
-      const toneOf = (it) => {
-        const c = mainColor(it), n = COLOR[c.id]?.n ?? 0, [, s, l] = hexHsl(c.hex);
-        if (l < 0.25) return 'd';
-        if (n === 1) return 'n';
-        if (n === 0.5) return 'e';
-        return s < 0.45 && l > 0.65 ? 'p' : 'b';
-      };
-      const share = sItems.filter(it => toneOf(it) === taste.tone || (taste.tone === 'n' && toneOf(it) === 'd')).length / sItems.length;
-      if (share >= 0.5) add(3, `좋아하는 ${TONE_NAME[taste.tone]} 느낌이에요`);
-    }
-    if (taste.fit) {
-      const fitItems = [o.top, o.bottom, o.dress].filter(Boolean);
-      if (fitItems.some(it => it.fit === (taste.fit === 'o' ? 'over' : 'slim'))) add(2, `좋아하는 ${FIT_NAME[taste.fit]}`);
-    }
-  }
-
   // 4) 격식
   const fs = sItems.map(itemF);
   const mean = fs.reduce((a, b) => a + b, 0) / fs.length;
@@ -260,7 +240,7 @@ function scoreOutfit(o, C) {
 }
 
 function maxScore(C) {
-  return 29 + (db.profile.taste && (db.profile.taste.tone || db.profile.taste.fit) ? 3 : 0) + (C.wx ? 26 : 0) + (C.styles.length ? 24 : 8) + 6 + (C.bt ? 8 : 0) + (C.hc ? 3 : 0) + (C.pc ? 8 : 0);
+  return 29 + (C.wx ? 26 : 0) + (C.styles.length ? 24 : 8) + 6 + (C.bt ? 8 : 0) + (C.hc ? 3 : 0) + (C.pc ? 8 : 0);
 }
 function gradeOf(pct) {
   if (pct >= 85) return '아주 잘 어울려요';
